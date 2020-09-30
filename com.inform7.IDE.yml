@@ -87,7 +87,7 @@ modules:
   buildsystem: autotools
   sources:
   - type: archive
-    url: http://inform7.com/download/content/6M62/I7_6M62_Linux_all.tar.gz
+    url: http://inform7.com/apps/6M62/I7_6M62_Linux_all.tar.gz
     sha256: 684e33d37e6fd21a1822233ddf35937f3a365c4a366486a113c5f32015d93cbd
   - type: archive
     url: https://github.com/ptomato/gnome-inform7/releases/download/6M62/Gnome_UI_Source_6M62.tar.xz
