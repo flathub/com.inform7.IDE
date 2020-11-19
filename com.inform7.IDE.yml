@@ -9,7 +9,6 @@ finish-args:
 - --socket=pulseaudio
 - --filesystem=~/Inform/:create
 command: gnome-inform7
-rename-desktop-file: gnome-inform7.desktop
 build-options:
   arch:
     x86_64:
@@ -87,20 +86,14 @@ modules:
   buildsystem: autotools
   sources:
   - type: archive
-    url: http://inform7.com/download/content/6M62/I7_6M62_Linux_all.tar.gz
+    url: http://inform7.com/apps/6M62/I7_6M62_Linux_all.tar.gz
     sha256: 684e33d37e6fd21a1822233ddf35937f3a365c4a366486a113c5f32015d93cbd
-  - type: archive
-    url: https://github.com/ptomato/gnome-inform7/releases/download/6M62/Gnome_UI_Source_6M62.tar.xz
-    sha256: 6290a0caa0c7c82c44a1cbd338962dbe0f4206d937eec48eafbd6af7366b7ff8
-  - type: patch
-    path: patches/gnome-inform7.patch
-  - type: file
-    path: files/com.inform7.IDE.appdata.xml
+  - type: git
+    url: https://github.com/ptomato/gnome-inform7.git
+    branch: master
+    commit: 49b7b8f27f47344f727b8e780b150e1c17c803f2
   - type: shell
     commands:
     - tar -f inform7-compilers_6M62_${INFORM7_ARCH}.tar.gz -C src/ni/ -x share/inform7/Compilers/ni --strip-components=3
-    - for dir in pixmaps/*x*; do mv ${dir}/apps/{inform7,com.inform7.IDE}.png; done
-    - mv com.inform7.{GUI,IDE}.gschema.xml
-    - mkdir /app/share/metainfo && install com.inform7.IDE.appdata.xml /app/share/metainfo/
 
 ...
