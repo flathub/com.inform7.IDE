@@ -1,7 +1,7 @@
 ---
 app-id: com.inform7.IDE
 runtime: org.gnome.Platform
-runtime-version: '3.28'
+runtime-version: '3.38'
 sdk: org.gnome.Sdk
 finish-args:
   - --socket=x11
@@ -79,6 +79,22 @@ modules:
         url: http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=2221f7d58e564c5f5e314124b29e6cf3d62e25a9
         sha256: 5338d103ed0204f28bcbc4eb10c0faac2e5dd7b6423ea4d30f39fbae34bfa847
         dest-filename: config.guess
+  # https://github.com/flathub/app.rednotebook.RedNotebook/blob/master/enchant.yaml
+  - name: enchant
+    config-opts:
+      - --disable-static
+      - --with-hunspell
+      - --with-myspell-dir=/usr/share/hunspell
+    sources:
+      - type: archive
+        url: http://www.abisource.com/downloads/enchant/1.6.0/enchant-1.6.0.tar.gz
+        sha256: 2fac9e7be7e9424b2c5570d8affe568db39f7572c10ed48d4e13cddf03f7097f
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
+          - autoreconf -vfi;
+    post-install:
+      - install -p -D -m 0644 "COPYING.LIB" -t "${FLATPAK_DEST}/share/licenses/enchant/";
   - name: gtkspell
     buildsystem: autotools
     sources:
@@ -89,6 +105,31 @@ modules:
         url: http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=2221f7d58e564c5f5e314124b29e6cf3d62e25a9
         sha256: 5338d103ed0204f28bcbc4eb10c0faac2e5dd7b6423ea4d30f39fbae34bfa847
         dest-filename: config.guess
+  - name: modplug
+    cleanup:
+      - /include
+      - /lib/pkgconfig
+      - '*.la'
+    sources:
+      - type: archive
+        url: http://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.9.0/libmodplug-0.8.9.0.tar.gz
+        sha1: 9d18572f85fdd95091befa972ee5d94139dcefde
+  - name: gstreamer-plugins-bad
+    cleanup:
+      - /include
+      - /lib/libgst*.so*
+      - /lib/pkgconfig
+    buildsystem: meson
+    config-opts:
+      - -Dauto_features=disabled
+      - -Dmodplug=enabled
+    sources:
+      # Keep in sync with https://gitlab.com/freedesktop-sdk/freedesktop-sdk/
+      # components/gstreamer-plugins-bad.bst on the applicable release branch
+      - type: git
+        url: https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git
+        tag: '1.16.3'
+        commit: ee8144e98b084d75ffabaef0ef3dca2af8d72061
   - name: gnome-inform7
     buildsystem: autotools
     sources:
