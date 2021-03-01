@@ -25,6 +25,7 @@ build-options:
         INFORM7_ARCH: armv6lhf
 modules:
   - shared-modules/gtk2/gtk2.json
+  # https://github.com/flathub/org.gimp.GIMP/blob/master/org.gimp.GIMP.json
   - name: webkitgtk
     config-opts:
       - --with-gtk=2.0
@@ -37,10 +38,16 @@ modules:
     build-options:
       env:
         PYTHON: /usr/bin/python3
+      cflags: -O2 -g -pipe -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive
+      cflags-override: true
+      cxxflags: -O2 -g -pipe -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive
+      cxxflags-override: true
       arch:
         aarch64:
-          cflags: -DENABLE_YARR_JIT=0 -fno-delete-null-pointer-checks
-          cxxflags: -DENABLE_YARR_JIT=0 -fno-delete-null-pointer-checks
+          cflags: -O2 -g -pipe -DENABLE_YARR_JIT=0 -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive
+          cflags-override: true
+          cxxflags: -O2 -g -pipe -DENABLE_YARR_JIT=0 -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive
+          cxxflags-override: true
           config-opts:
             - --disable-jit
     cleanup:
