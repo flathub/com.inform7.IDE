@@ -140,7 +140,7 @@ modules:
       - type: git
         url: https://github.com/ptomato/gnome-inform7.git
         branch: master
-        commit: 49b7b8f27f47344f727b8e780b150e1c17c803f2
+        commit: 1efeb020d50cb2e5d9fab703ee2c71df5f0e6621
       - type: shell
         commands:
           - tar -f inform7-compilers_6M62_${INFORM7_ARCH}.tar.gz -C src/ni/ -x share/inform7/Compilers/ni --strip-components=3
