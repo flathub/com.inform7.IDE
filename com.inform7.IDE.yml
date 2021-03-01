@@ -8,6 +8,7 @@ finish-args:
   - --share=ipc
   - --socket=pulseaudio
   - --filesystem=~/Inform/:create
+  - --filesystem=xdg-documents  # Needed for GTK select-folder dialogs :-(
 command: gnome-inform7
 build-options:
   arch:
