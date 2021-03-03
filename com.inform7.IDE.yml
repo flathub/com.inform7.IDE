@@ -52,8 +52,12 @@ modules:
           config-opts:
             - --disable-jit
     cleanup:
+      - /include
+      - /lib/pkgconfig
       - /share/doc
+      - /share/gtk-doc
       - /bin
+      - '*.la'
     sources:
       - type: archive
         url: https://www.webkitgtk.org/releases/webkitgtk-2.4.11.tar.xz
@@ -62,6 +66,14 @@ modules:
         path: patches/webkitgtk-2.4.11.patch
   - name: goocanvas
     buildsystem: autotools
+    cleanup:
+      - /include
+      - /lib/pkgconfig
+      - /share/gtk-doc
+      - '*.la'
+    config-opts:
+      - --disable-gtk-doc
+      - --disable-static
     sources:
       - type: archive
         url: http://ftp.gnome.org/pub/GNOME/sources/goocanvas/1.0/goocanvas-1.0.0.tar.gz
@@ -72,6 +84,13 @@ modules:
         dest-filename: config.guess
   - name: gtksourceview2
     buildsystem: autotools
+    cleanup:
+      - /include
+      - /lib/pkgconfig
+      - /share/gtk-doc
+      - '*.la'
+    config-opts:
+      - --disable-gtk-doc
     sources:
       - type: archive
         url: https://download.gnome.org/sources/gtksourceview/2.2/gtksourceview-2.2.2.tar.gz
@@ -82,6 +101,12 @@ modules:
         dest-filename: config.guess
   # https://github.com/flathub/app.rednotebook.RedNotebook/blob/master/enchant.yaml
   - name: enchant
+    cleanup:
+      - /bin
+      - /include
+      - /lib/pkgconfig
+      - /share/man
+      - '*.la'
     config-opts:
       - --disable-static
       - --with-hunspell
@@ -98,6 +123,14 @@ modules:
       - install -p -D -m 0644 "COPYING.LIB" -t "${FLATPAK_DEST}/share/licenses/enchant/";
   - name: gtkspell
     buildsystem: autotools
+    cleanup:
+      - /include
+      - /lib/pkgconfig
+      - /share/gtk-doc
+      - '*.la'
+    config-opts:
+      - --disable-gtk-doc
+      - --disable-static
     sources:
       - type: archive
         url: https://sourceforge.net/projects/gtkspell/files/2.0.16/gtkspell-2.0.16.tar.gz
