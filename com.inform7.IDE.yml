@@ -1,7 +1,7 @@
 ---
 app-id: com.inform7.IDE
 runtime: org.gnome.Platform
-runtime-version: '3.38'
+runtime-version: '42'
 sdk: org.gnome.Sdk
 finish-args:
   - --socket=x11
@@ -15,13 +15,7 @@ build-options:
     x86_64:
       env:
         INFORM7_ARCH: x86_64
-    i386:
-      env:
-        INFORM7_ARCH: i386
     aarch64:
-      env:
-        INFORM7_ARCH: armv6lhf
-    arm:
       env:
         INFORM7_ARCH: armv6lhf
 modules:
@@ -39,16 +33,14 @@ modules:
     build-options:
       env:
         PYTHON: /usr/bin/python3
-      cflags: -O2 -g -pipe -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive
+      cflags: -O2 -g -pipe -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_60
       cflags-override: true
-      cxxflags: -O2 -g -pipe -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive
+      cxxflags: -O2 -g -pipe -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_60
       cxxflags-override: true
       arch:
         aarch64:
-          cflags: -O2 -g -pipe -DENABLE_YARR_JIT=0 -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive
-          cflags-override: true
-          cxxflags: -O2 -g -pipe -DENABLE_YARR_JIT=0 -Wno-expansion-to-defined -Wno-class-memaccess -Wno-deprecated-copy -Wno-deprecated-declarations -fno-delete-null-pointer-checks -fpermissive
-          cxxflags-override: true
+          cflags: -DENABLE_YARR_JIT=0
+          cxxflags: -DENABLE_YARR_JIT=0
           config-opts:
             - --disable-jit
     cleanup:
@@ -64,6 +56,8 @@ modules:
         sha256: 588aea051bfbacced27fdfe0335a957dca839ebe36aa548df39c7bbafdb65bf7
       - type: patch
         path: patches/webkitgtk-2.4.11.patch
+      - type: patch
+        path: patches/webkitgtk-41-fix.patch
   - name: goocanvas
     buildsystem: autotools
     cleanup:
@@ -78,10 +72,9 @@ modules:
       - type: archive
         url: http://ftp.gnome.org/pub/GNOME/sources/goocanvas/1.0/goocanvas-1.0.0.tar.gz
         sha256: 8bd4187f2045080c1f8b6bac135d4231c401e89cb71a30d9c32fd63f4c6245aa
-      - type: file
-        url: http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=2221f7d58e564c5f5e314124b29e6cf3d62e25a9
-        sha256: 5338d103ed0204f28bcbc4eb10c0faac2e5dd7b6423ea4d30f39fbae34bfa847
-        dest-filename: config.guess
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
   - name: gtksourceview2
     buildsystem: autotools
     cleanup:
@@ -95,10 +88,9 @@ modules:
       - type: archive
         url: https://download.gnome.org/sources/gtksourceview/2.2/gtksourceview-2.2.2.tar.gz
         sha256: 9330de25198b1d22ca005f8571a8eb22a7074cdd039e63fcbe5b6900ec2acd64
-      - type: file
-        url: http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=2221f7d58e564c5f5e314124b29e6cf3d62e25a9
-        sha256: 5338d103ed0204f28bcbc4eb10c0faac2e5dd7b6423ea4d30f39fbae34bfa847
-        dest-filename: config.guess
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
   # https://github.com/flathub/app.rednotebook.RedNotebook/blob/master/enchant.yaml
   - name: enchant
     cleanup:
@@ -113,7 +105,7 @@ modules:
       - --with-myspell-dir=/usr/share/hunspell
     sources:
       - type: archive
-        url: http://www.abisource.com/downloads/enchant/1.6.0/enchant-1.6.0.tar.gz
+        url: https://www.abisource.com/downloads/enchant/1.6.0/enchant-1.6.0.tar.gz
         sha256: 2fac9e7be7e9424b2c5570d8affe568db39f7572c10ed48d4e13cddf03f7097f
       - type: shell
         commands:
@@ -135,10 +127,9 @@ modules:
       - type: archive
         url: https://sourceforge.net/projects/gtkspell/files/2.0.16/gtkspell-2.0.16.tar.gz
         sha256: 8fc7dc560167b2cb7193e76aca625a152dc19b0ebf49816b78539cbb90d80d02
-      - type: file
-        url: http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=2221f7d58e564c5f5e314124b29e6cf3d62e25a9
-        sha256: 5338d103ed0204f28bcbc4eb10c0faac2e5dd7b6423ea4d30f39fbae34bfa847
-        dest-filename: config.guess
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
   - name: modplug
     cleanup:
       - /include
@@ -146,8 +137,8 @@ modules:
       - '*.la'
     sources:
       - type: archive
-        url: http://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.9.0/libmodplug-0.8.9.0.tar.gz
-        sha1: 9d18572f85fdd95091befa972ee5d94139dcefde
+        url: https://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.9.0/libmodplug-0.8.9.0.tar.gz
+        sha256: 457ca5a6c179656d66c01505c0d95fafaead4329b9dbaa0f997d00a3508ad9de
   - name: gstreamer-plugins-bad
     cleanup:
       - /include
@@ -172,7 +163,7 @@ modules:
         sha256: 684e33d37e6fd21a1822233ddf35937f3a365c4a366486a113c5f32015d93cbd
       - type: git
         url: https://github.com/ptomato/gnome-inform7.git
-        branch: master
+        # branch: master
         commit: 1efeb020d50cb2e5d9fab703ee2c71df5f0e6621
       - type: shell
         commands:
