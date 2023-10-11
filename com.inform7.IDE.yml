@@ -220,6 +220,8 @@ modules:
         commit: 9c4c0ba7994dafff49b64319e2b1606005ad5d1b
       - type: patch
         path: inform7-ide-webkit.patch
+      - type: patch
+        path: update-appdata.patch
       - type: shell
         commands:
           - cp -R /app/tmp/intools .
