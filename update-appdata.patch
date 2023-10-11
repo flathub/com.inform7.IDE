@@ -76,7 +76,7 @@ diff --git a/com.inform7.IDE.appdata.xml b/com.inform7.IDE.appdata.xml
 +  <url type="bugtracker">https://ganelson.github.io/inform-website/bugs/</url>
 +  <url type="help">https://ganelson.github.io/inform-website/doc/</url>
 +  <url type="donate">https://ganelson.github.io/inform-website/donate/</url>
-+  <url type="vcs-tracker">https://github.com/ptomato/inform7-ide</url>
++  <url type="vcs-browser">https://github.com/ptomato/inform7-ide/</url>
 +  <url type="contribute">https://github.com/ganelson/inform/</url>
    <releases>
 -    <release version="6M62" date="2015-12-24">
