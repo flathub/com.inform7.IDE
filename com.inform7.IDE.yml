@@ -143,8 +143,8 @@ modules:
       # branch
       - type: git
         url: https://gitlab.freedesktop.org/gstreamer/gstreamer.git
-        tag: '1.20.6'
-        commit: b7d3037cca2fe72c5b7daab5e0617e61ae013dcc
+        tag: '1.22.5'
+        commit: bf6ce1d64a0697e7910826147b48f8f658366a5a
   - name: chimara
     cleanup:
       - /include
