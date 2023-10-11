@@ -141,10 +141,9 @@ modules:
       # Keep in sync with https://gitlab.com/freedesktop-sdk/freedesktop-sdk/
       # elements/components/gstreamer-plugins-bad.bst on the applicable release
       # branch
-      - type: git
-        url: https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git
-        tag: '1.18.5'
-        commit: d3af58d5b31941caa26c3ded85d7a7b84a91f0cc
+      - type: archive
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.22.5.tar.xz
+        sha256: e64e75cdafd7ff2fc7fc34e855b06b1e3ed227cc06fa378d17bbcd76780c338c
   - name: chimara
     cleanup:
       - /include
