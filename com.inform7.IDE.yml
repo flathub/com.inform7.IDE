@@ -216,7 +216,7 @@ modules:
     post-install:
       - install -Dm644 updated-appdata.xml /app/share/appdata/$FLATPAK_ID.appdata.xml
     sources:
-      # Remove updated-appdata.xml and the post-install commands
+      # Remove updated-appdata.xml and the post-install command
       # when the next version of the Inform IDE gets released
       # and is updated here in this Flatpak manifest
       - type: file
