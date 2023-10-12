@@ -220,7 +220,7 @@ modules:
       # when the next version of the Inform IDE gets released
       # and is updated here in this Flatpak manifest
       - type: file
-        url: https://github.com/ptomato/inform7-ide/blob/fd8ec391f60ba00684cd46cdf82187f97e43d1c1/com.inform7.IDE.appdata.xml
+        url: https://raw.githubusercontent.com/ptomato/inform7-ide/fd8ec391f60ba00684cd46cdf82187f97e43d1c1/com.inform7.IDE.appdata.xml
         sha256: ef68c09c533e60f5e7a29950757a1b229985280ceb960b2f9be77c57629745ba
         dest-filename: updated-appdata.xml
       - type: git
