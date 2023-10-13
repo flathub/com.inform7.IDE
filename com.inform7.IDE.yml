@@ -235,7 +235,6 @@ modules:
         sha256: ef68c09c533e60f5e7a29950757a1b229985280ceb960b2f9be77c57629745ba
         dest-filename: updated-appdata.xml
     build-commands:
-      - rm /app/share/appdata/$FLATPAK_ID.appdata.xml
       - install -Dm644 updated-appdata.xml /app/share/appdata/$FLATPAK_ID.appdata.xml
 
 ...
