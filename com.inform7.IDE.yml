@@ -145,6 +145,9 @@ modules:
         url: https://gitlab.freedesktop.org/gstreamer/gstreamer.git
         tag: '1.22.5'
         commit: bf6ce1d64a0697e7910826147b48f8f658366a5a
+        # Workaround for 'smudge error' with git-lfs
+        # https://github.com/flatpak/flatpak-github-actions/issues/159
+        disable-submodules: true
   - name: chimara
     cleanup:
       - /include
@@ -207,7 +210,11 @@ modules:
     build-commands:
       - bash inweb/scripts/first.sh linux
       - bash intest/scripts/first.sh
-      - cd inform; bash scripts/first.sh
+      # Work around UB and/or miscompilation with -O2
+      # _FORTIFY_SOURCE requires optimization, so disable that too
+      - |
+        cd inform;
+        CFLAGS="$CFLAGS -O0 -fPIE -Wp,-U_FORTIFY_SOURCE" bash scripts/first.sh
       - make -C inform forceintegration
       - make -C inform retrospective
       - cp -R inform/retrospective /app/tmp
