@@ -101,6 +101,12 @@ modules:
         url: "https://download.gnome.org/sources/gtksourceview/\
           4.8/gtksourceview-4.8.2.tar.xz"
         sha256: 842de7e5cb52000fd810e4be39cd9fe29ffa87477f15da85c18f7b82d45637cc
+        x-checker-data:
+          type: gnome
+          name: gtksourceview
+          versions:
+            <: 5.0.0
+          version-scheme: odd-minor-is-unstable
   - name: ratify
     cleanup:
       - /include
