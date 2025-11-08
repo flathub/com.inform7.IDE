@@ -240,8 +240,8 @@ modules:
     buildsystem: simple
     sources:
       - type: file
-        url: https://raw.githubusercontent.com/ptomato/inform7-ide/fd8ec391f60ba00684cd46cdf82187f97e43d1c1/com.inform7.IDE.appdata.xml
-        sha256: ef68c09c533e60f5e7a29950757a1b229985280ceb960b2f9be77c57629745ba
+        url: https://raw.githubusercontent.com/ptomato/inform7-ide/4dcec50eac45c3f92a20c119ea0d7592537886c1/com.inform7.IDE.appdata.xml
+        sha256: 653977960f38afd71d979727ec8b4a9373e1441587e883bedb41d5ab89afcccc
         dest-filename: updated-appdata.xml
     build-commands:
       - install -Dm644 updated-appdata.xml /app/share/metainfo/$FLATPAK_ID.appdata.xml
