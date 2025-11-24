@@ -1,11 +1,12 @@
 ---
 app-id: com.inform7.IDE
 runtime: org.gnome.Platform
-runtime-version: '45'
+runtime-version: '46'
 sdk: org.gnome.Sdk
 finish-args:
   - --socket=x11
   - --share=ipc
+  - --share=network
   - --socket=pulseaudio
   - --device=dri
   - --filesystem=~/Inform/:create
@@ -116,8 +117,9 @@ modules:
       - -Dvapi=disabled
     sources:
       - type: archive
-        url: https://github.com/ptomato/ratify/releases/download/v2.0.0/ratify-2.0.0.tar.xz
-        sha256: 0c29e45441e7b973dc482ba60becefe06de878af7ee1cd240bd94197a30d4d08
+        url: "https://github.com/ptomato/ratify/releases/download/\
+          v2.0.1/ratify-2.0.1.tar.xz"
+        sha256: 19f44b6711a1e160614b5ae88e33caa511c128e1768e6277e18e892919a181dd
   - name: modplug
     cleanup:
       - /include
@@ -164,8 +166,9 @@ modules:
       - -Dintrospection=false
     sources:
       - type: archive
-        url: https://github.com/chimara/Chimara/releases/download/0.9.3/chimara-0.9.3.tar.xz
-        sha256: 8b2abea57ce0e2c8a80ab87f1ad0c78f3e7da6682ad16b80c0b5edddd3da3d0a
+        url: "https://github.com/chimara/Chimara/releases/download/\
+          0.9.4/chimara-0.9.4.tar.xz"
+        sha256: d2e097649e20f4f78f30c80839368f0017495c18c257052604a9f09bdfd4396f
   - name: rsync
     config-opts:
       # rsync is only used to install some of Inform's data files locally.
@@ -224,25 +227,14 @@ modules:
     sources:
       - type: git
         url: https://github.com/ptomato/inform7-ide.git
-        tag: 2.0.0
-        commit: 9c4c0ba7994dafff49b64319e2b1606005ad5d1b
-      - type: patch
-        path: inform7-ide-webkit.patch
+        tag: 2.0.1
+        commit: ea86b9830a96bc16c2cbd3857f00a8cf07c327f3
       - type: shell
         commands:
           - cp -R /app/tmp/intools .
           - cp -R /app/tmp/data/* data/
           - cp -R /app/tmp/inform/* src/inform/
           - cp -R /app/tmp/retrospective .
-  # Remove this updated-appdata module when the next
-  # version of the Inform IDE gets released and is
-  # updated here in this Flatpak manifest
-  - name: updated-appdata
-    buildsystem: simple
-    sources:
-      - type: file
-        url: https://raw.githubusercontent.com/ptomato/inform7-ide/4dcec50eac45c3f92a20c119ea0d7592537886c1/com.inform7.IDE.appdata.xml
-        sha256: 653977960f38afd71d979727ec8b4a9373e1441587e883bedb41d5ab89afcccc
-        dest-filename: updated-appdata.xml
-    build-commands:
-      - install -Dm644 updated-appdata.xml /app/share/metainfo/$FLATPAK_ID.appdata.xml
+
+...
+
