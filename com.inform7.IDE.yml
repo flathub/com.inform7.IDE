@@ -1,7 +1,6 @@
----
 app-id: com.inform7.IDE
 runtime: org.gnome.Platform
-runtime-version: '46'
+runtime-version: '50'
 sdk: org.gnome.Sdk
 finish-args:
   - --socket=x11
@@ -23,13 +22,7 @@ build-options:
     x86_64:
       env:
         INFORM7_ARCH: x86_64
-    i386:
-      env:
-        INFORM7_ARCH: i386
     aarch64:
-      env:
-        INFORM7_ARCH: armv6lhf
-    arm:
       env:
         INFORM7_ARCH: armv6lhf
 modules:
@@ -39,6 +32,8 @@ modules:
       - /lib/pkgconfig
       - /share/gtk-doc
       - '*.la'
+    build-options:
+      cflags: -Wno-error=incompatible-pointer-types -std=gnu17
     config-opts:
       - --disable-introspection
       - --disable-python
@@ -48,6 +43,9 @@ modules:
       - type: archive
         url: https://download.gnome.org/sources/goocanvas/2.0/goocanvas-2.0.4.tar.xz
         sha256: c728e2b7d4425ae81b54e1e07a3d3c8a4bd6377a63cffa43006045bceaa92e90
+      - type: patch
+        path: goocanvas-2.0.4-pyoverridesdir.patch
+
   - name: gspell
     cleanup:
       - /bin
@@ -63,6 +61,7 @@ modules:
       - type: archive
         url: https://download.gnome.org/sources/gspell/1.8/gspell-1.8.4.tar.xz
         sha256: cf4d16a716e813449bd631405dc1001ea89537b8cdae2b8abfb3999212bd43b4
+
   - name: plist
     cleanup:
       - /bin
@@ -78,6 +77,7 @@ modules:
       - type: archive
         url: https://github.com/libimobiledevice/libplist/releases/download/2.2.0/libplist-2.2.0.tar.bz2
         sha256: 4a5517e5377ec421df84c586ba85bb4e1d26f11ad203d7d450a907c0156fbd9a
+
   - name: gtksourceview
     cleanup:
       - /include
@@ -105,6 +105,7 @@ modules:
           versions:
             <: 5.0.0
           version-scheme: odd-minor-is-unstable
+
   - name: ratify
     cleanup:
       - /include
@@ -117,9 +118,9 @@ modules:
       - -Dvapi=disabled
     sources:
       - type: archive
-        url: "https://github.com/ptomato/ratify/releases/download/\
-          v2.0.1/ratify-2.0.1.tar.xz"
+        url: https://github.com/ptomato/ratify/releases/download/v2.0.1/ratify-2.0.1.tar.xz
         sha256: 19f44b6711a1e160614b5ae88e33caa511c128e1768e6277e18e892919a181dd
+
   - name: modplug
     cleanup:
       - /include
@@ -129,6 +130,7 @@ modules:
       - type: archive
         url: https://downloads.sourceforge.net/project/modplug-xmms/libmodplug/0.8.9.0/libmodplug-0.8.9.0.tar.gz
         sha256: 457ca5a6c179656d66c01505c0d95fafaead4329b9dbaa0f997d00a3508ad9de
+
   - name: gstreamer-plugins-bad
     cleanup:
       - /bin
@@ -152,6 +154,7 @@ modules:
         # Workaround for 'smudge error' with git-lfs
         # https://github.com/flatpak/flatpak-github-actions/issues/159
         disable-submodules: true
+
   - name: chimara
     cleanup:
       - /include
@@ -159,6 +162,8 @@ modules:
       - /libexec
       - /share/doc
     buildsystem: meson
+    build-options:
+      cflags: -fpermissive -std=gnu17
     config-opts:
       - -Dbocfel=false
       - -Dnitfol=false
@@ -166,9 +171,9 @@ modules:
       - -Dintrospection=false
     sources:
       - type: archive
-        url: "https://github.com/chimara/Chimara/releases/download/\
-          0.9.4/chimara-0.9.4.tar.xz"
+        url: https://github.com/chimara/Chimara/releases/download/0.9.4/chimara-0.9.4.tar.xz
         sha256: d2e097649e20f4f78f30c80839368f0017495c18c257052604a9f09bdfd4396f
+
   - name: rsync
     config-opts:
       # rsync is only used to install some of Inform's data files locally.
@@ -187,8 +192,9 @@ modules:
     cleanup: ['*']
     sources:
       - type: archive
-        url: https://download.samba.org/pub/rsync/src/rsync-3.2.3.tar.gz
-        sha256: becc3c504ceea499f4167a260040ccf4d9f2ef9499ad5683c179a697146ce50e
+        url: https://download.samba.org/pub/rsync/rsync-3.4.1.tar.gz
+        sha256: 2924bcb3a1ed8b551fc101f740b9f0fe0a202b115027647cf69850d65fd88c52
+
   - name: inform
     buildsystem: simple
     cleanup: ['*']
@@ -222,8 +228,11 @@ modules:
       - make -C inform forceintegration
       - make -C inform retrospective
       - cp -R inform/retrospective /app/tmp
+
   - name: inform7-ide
     buildsystem: meson
+    build-options:
+      cflags: -Wno-error=incompatible-pointer-types -std=gnu17
     sources:
       - type: git
         url: https://github.com/ptomato/inform7-ide.git
@@ -235,6 +244,4 @@ modules:
           - cp -R /app/tmp/data/* data/
           - cp -R /app/tmp/inform/* src/inform/
           - cp -R /app/tmp/retrospective .
-
-...
 
